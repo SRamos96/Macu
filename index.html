@@ -97,7 +97,20 @@
 
   </div>
   <!-- /.container -->
-
+<div class="container" style="background-color: burlywood;">
+  <div class="row">
+    <div class="col-4">
+      <p class="d-inline">El total del carrito es: $</p>
+      <p class="d-inline" id="totalDelCarrito"></p>
+    </div>
+    <div class="col-4">
+      <button id="limpiarCarrito" onclick="limpiarCarrito(totalCarrito)">Limpiar Carrito</button>
+    </div>
+    <div class="col-4">
+      <button id="calcularIVA" onclick="calcularIVA(totalCarrito)">Calcular IVA</button>
+    </div>
+  </div>
+</div>
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">

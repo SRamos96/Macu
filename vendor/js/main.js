@@ -4,6 +4,7 @@ let productos = ['Remera', 'Pantalón', 'Chomba', 'Buzo', 'Buzo Canguro', 'Campe
 let stock = 30;
 let acumulador = ``;
 let totalCarrito = 0;
+let totalCarritoIVA = totalCarrito * 1.21;
 
 for(desde; desde < precios.length; desde++) {
   acumulador += `<div class="col-lg-4 col-md-6 mb-4">
@@ -30,7 +31,8 @@ document.getElementById("destacados").innerHTML = acumulador;
 function agregarAlCarrito(precios){
   if (true) {
     totalCarrito += precios;
-    alert(`Se agrego un nuevo producto al carrito. El total es: ${totalCarrito}`);
+    alert(`Se agrego un nuevo producto al carrito.`);
+    document.getElementById("totalDelCarrito").innerHTML = totalCarrito;
   }
   else {
     alert(`No tenemos stock disponible`);
@@ -38,4 +40,13 @@ function agregarAlCarrito(precios){
 }
 function validadorDeStock(stock) {
   return stock > 0
+}
+function limpiarCarrito(totalCarrito){
+  totalCarrito = totalCarrito - totalCarrito;
+  document.getElementById("totalDelCarrito").innerHTML = totalCarrito;
+  alert("Se ha limpiado el carrito exitosamente");
+}
+function calcularIVA(totalCarrito) {
+  totalCarrito = totalCarrito * 1.21;
+  alert(totalCarrito);
 }
