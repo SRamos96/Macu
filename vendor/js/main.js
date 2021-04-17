@@ -42,7 +42,7 @@ function validadorDeStock(stock) {
   return stock > 0
 }
 function limpiarCarrito(totalCarrito){
-  totalCarrito = totalCarrito - totalCarrito;
+  totalCarrito -= totalCarrito;
   document.getElementById("totalDelCarrito").innerHTML = totalCarrito;
   alert("Se ha limpiado el carrito exitosamente");
 }

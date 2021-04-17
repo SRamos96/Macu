@@ -43,7 +43,9 @@ producto7.verProductoEnConsola();
 producto8.verProductoEnConsola();
 
 function agregarAlCarrito(precio) {
-      
+  totalCarrito += precio;
+  alert(`Se agrego un nuevo producto al carrito.`);
+  document.getElementById("totalDelCarrito").innerHTML = totalCarrito;
 }
 //* Generador de cards a partir del objeto
 let tienda = [producto0, producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8]
@@ -67,3 +69,13 @@ for(let i = 0;  i < tienda.length; i++) {
     </div>`}
 
     document.getElementById("mercado").innerHTML = generadorDeCards;
+
+    function limpiarCarrito(totalCarrito){
+      totalCarrito -= totalCarrito;
+      document.getElementById("totalDelCarrito").innerHTML = totalCarrito;
+      alert("Se ha limpiado el carrito exitosamente");
+    }
+    function calcularIVA(totalCarrito) {
+      totalCarrito = totalCarrito * 1.21;
+      alert(totalCarrito);
+    }
