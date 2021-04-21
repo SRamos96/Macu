@@ -3,44 +3,42 @@ let totalCarrito = 0;
 let generadorDeCards = ``;
 
 class Productos {
-  constructor(nombre, precio) {
+  constructor(nombre, precio, stock) {
     this.nombre = nombre;
     this.precio = Number(precio);
-    this.stock = 2;
+    this.stock = Number(stock);
   }
   sumaIVA() {
-    this.precio = this.precio * 1.21;
+    this.precio += this.precio * 1.21;
   }
-  reducirStock() {
-    this.stock = this.stock - 1;
+  comprar(){
+    this.stock = this.stock -1; 
+    console.log(this.stock);
   }
   comprobarStock() {
-    if (this.stock = 0) {
-      alert("No hay stock disponible")
+    if (this.stock == 0) {
+      console.log("No tenemos stock de "+ this.nombre)
     }
-  }
-  verProductoEnConsola(){
-    console.table(this.nombre, this.precio,)
+ 
   }
 }
-const producto0 =  new Productos("Remera", 750);
-const producto1 =  new Productos("Pantalón", 800);
-const producto2 =  new Productos("Chomba", 850);
-const producto3 =  new Productos("Buzo", 900);
-const producto4 =  new Productos("Buzo Canguro", 950);
-const producto5 =  new Productos("Campera", 1000);
-const producto6 =  new Productos("Campera c/Capucha", 1050);
+const producto0 =  new Productos("Remera", 750, 5);
+const producto1 =  new Productos("Pantalón", 800, 2);
+const producto2 =  new Productos("Chomba", 850, 2);
+const producto3 =  new Productos("Buzo", 900, 0);
+const producto4 =  new Productos("Buzo Canguro", 950, 1);
+const producto5 =  new Productos("Campera", 1000, 1);
+const producto6 =  new Productos("Campera c/Capucha", 1050, 0);
 const producto7 =  new Productos("Pantalón + Buzo", 1100);
 const producto8 =  new Productos("Remera + Pantalón + Buzo", 1150);
-producto0.verProductoEnConsola();
-producto1.verProductoEnConsola();
-producto2.verProductoEnConsola();
-producto3.verProductoEnConsola();
-producto4.verProductoEnConsola();
-producto5.verProductoEnConsola();
-producto6.verProductoEnConsola();
-producto7.verProductoEnConsola();
-producto8.verProductoEnConsola();
+
+producto0.comprobarStock();
+producto1.comprobarStock();
+producto2.comprobarStock();
+producto3.comprobarStock();
+producto4.comprobarStock();
+producto5.comprobarStock();
+producto6.comprobarStock();
 
 function agregarAlCarrito(precio) {
   totalCarrito += precio;
@@ -66,16 +64,15 @@ for(let i = 0;  i < tienda.length; i++) {
           <button onclick="agregarAlCarrito(${tienda[i].precio})">Agregar al carrito</button>
         </div>
       </div>
-    </div>`}
+    </div>`;
+    console.table(tienda[i]);
+  }
 
     document.getElementById("mercado").innerHTML = generadorDeCards;
 
     function limpiarCarrito(totalCarrito){
-      totalCarrito -= totalCarrito;
+      totalCarrito = 0;
       document.getElementById("totalDelCarrito").innerHTML = totalCarrito;
       alert("Se ha limpiado el carrito exitosamente");
-    }
-    function calcularIVA(totalCarrito) {
-      totalCarrito = totalCarrito * 1.21;
-      alert(totalCarrito);
+
     }
