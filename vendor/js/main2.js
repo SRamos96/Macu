@@ -3,10 +3,11 @@ let totalCarrito = 0;
 let generadorDeCards = ``;
 
 class Productos {
-  constructor(nombre, precio, stock) {
+  constructor(nombre, precio, stock, combo) {
     this.nombre = nombre;
     this.precio = Number(precio);
     this.stock = Number(stock);
+    this.combo = combo;
   }
   sumaIVA() {
     this.precio += this.precio * 1.21;
@@ -22,15 +23,15 @@ class Productos {
  
   }
 }
-const producto0 =  new Productos("Remera", 750, 5);
-const producto1 =  new Productos("Pantalón", 800, 2);
-const producto2 =  new Productos("Chomba", 850, 2);
-const producto3 =  new Productos("Buzo", 900, 0);
-const producto4 =  new Productos("Buzo Canguro", 950, 1);
-const producto5 =  new Productos("Campera", 1000, 1);
-const producto6 =  new Productos("Campera c/Capucha", 1050, 0);
-const producto7 =  new Productos("Pantalón + Buzo", 1100);
-const producto8 =  new Productos("Remera + Pantalón + Buzo", 1150);
+const producto0 =  new Productos("Remera", 750, 5, "no");
+const producto1 =  new Productos("Pantalón", 800, 2, "no");
+const producto2 =  new Productos("Chomba", 600, 2, "no");
+const producto3 =  new Productos("Buzo", 900, 0, "no");
+const producto4 =  new Productos("Buzo Canguro", 950, 1, "no");
+const producto5 =  new Productos("Campera", 2500, 1, "no");
+const producto6 =  new Productos("Campera c/Capucha", 1050, 0, "no");
+const producto7 =  new Productos("Pantalón + Buzo", 200, "si");
+const producto8 =  new Productos("Remera + Pantalón + Buzo", 1000, "si");
 
 producto0.comprobarStock();
 producto1.comprobarStock();
@@ -40,13 +41,18 @@ producto4.comprobarStock();
 producto5.comprobarStock();
 producto6.comprobarStock();
 
-function agregarAlCarrito(precio) {
-  totalCarrito += precio;
+
+const agregarAlCarrito = (precio) => {
+  totalCarrito+=precio;
   alert(`Se agrego un nuevo producto al carrito.`);
-  document.getElementById("totalDelCarrito").innerHTML = totalCarrito;
-}
+document.getElementById("totalDelCarrito").innerHTML = totalCarrito;}
+
 //* Generador de cards a partir del objeto
-let tienda = [producto0, producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8]
+let tienda0 = [producto0, producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8]
+
+//Se muestra la tienda ordenada por precio de menor a mayor
+let tienda = tienda0.sort((a, b) => a.precio - b.precio);
+
 for(let i = 0;  i < tienda.length; i++) {
      generadorDeCards += `<div class="col-lg-4 col-md-6 mb-4">
       <div class="card h-100">
@@ -70,8 +76,15 @@ for(let i = 0;  i < tienda.length; i++) {
 
     document.getElementById("mercado").innerHTML = generadorDeCards;
 
+    //Desafio Arrays c/filtro
+    const filtroCombo = tienda.filter (tienda => tienda.combo == "no");
+    console.log(filtroCombo);
+
+    //Desafio Arrays usando sort() ordenando el precio de menor a mayor
+    console.log();
+
     function limpiarCarrito(totalCarrito){
-      totalCarrito = 0;
+      totalCarrito = [];
       document.getElementById("totalDelCarrito").innerHTML = totalCarrito;
       alert("Se ha limpiado el carrito exitosamente");
 
