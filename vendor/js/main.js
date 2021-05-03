@@ -2,12 +2,14 @@ const contenedorProductos = document.getElementById('mercado');
 const selectConjunto = document.getElementById('selectConjunto');
 const selectPrecios = document.getElementById('selectPrecios');
 const contenedorCarrito = document.getElementById('contenedorCarrito');
+const totalCarrito = document.getElementById('totalCarrito');
 
 const carrito = [];
 
 
 class Productos {
-  constructor(nombre, precio, stock, combo, img) {
+  constructor(id, nombre, precio, stock, combo, img) {
+    this.id = id;
     this.nombre = nombre;
     this.precio = Number(precio);
     this.stock = Number(stock);
@@ -16,15 +18,15 @@ class Productos {
   }
 }
 
-const producto0 = new Productos("Remera", 750, 5, "no", 0);
-const producto1 = new Productos("Pantalón", 800, 2, "no", 1);
-const producto2 = new Productos("Chomba", 600, 2, "no", 2);
-const producto3 = new Productos("Buzo", 900, 0, "no", 3);
-const producto4 = new Productos("Buzo Canguro", 950, 1, "no", 4);
-const producto5 = new Productos("Campera", 2500, 1, "no", 5);
-const producto6 = new Productos("Campera c/Capucha", 1050, 0, "no", 6);
-const producto7 = new Productos("Pantalón + Buzo", 200, 1, "si", 7);
-const producto8 = new Productos("Remera + Pantalón + Buzo", 1000, 1, "si", 8);
+const producto0 = new Productos(0,"Remera", 750, 5, "no", 0);
+const producto1 = new Productos(1,"Pantalón", 800, 2, "no", 1);
+const producto2 = new Productos(2,"Chomba", 600, 2, "no", 2);
+const producto3 = new Productos(3,"Buzo", 900, 0, "no", 3);
+const producto4 = new Productos(4,"Buzo Canguro", 950, 1, "no", 4);
+const producto5 = new Productos(5,"Campera", 2500, 1, "no", 5);
+const producto6 = new Productos(6,"Campera c/Capucha", 1050, 0, "no", 6);
+const producto7 = new Productos(7,"Pantalón + Buzo", 200, 1, "si", 7);
+const producto8 = new Productos(8,"Remera + Pantalón + Buzo", 1000, 1, "si", 8);
 
 let tienda0 = [producto0, producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8]
 
@@ -48,7 +50,7 @@ function generarProductos(array) {
       </div>
       <div class="card-footer">
         <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-        <button onclick="agregarAlCarrito('${tienda0.nombre}')">Agregar al carrito</button>
+        <button onclick="agregarAlCarrito('${tienda0.id}')">Agregar al carrito</button>
       </div>
     </div>`;
     contenedorProductos.appendChild(div);
@@ -80,8 +82,8 @@ function filtrar() {
   generarProductos(arrayFiltrado);
 }
 
-function agregarAlCarrito(nombre) {
-  let productoElegido = tienda0.find(el => el.nombre == nombre);
+function agregarAlCarrito(id) {
+  let productoElegido = tienda0.find(el => el.id == id);
   carrito.push(productoElegido);
 
   localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -91,8 +93,8 @@ function agregarAlCarrito(nombre) {
   actualizarCarrito();
 }
 
-function eliminarProducto(nombre) {
-  let productoAEliminar = carrito.find(el => el.nombre == nombre);
+function eliminarProducto(id) {
+  let productoAEliminar = carrito.find(el => el.id == id);
   let indice = carrito.indexOf(productoAEliminar);
 
   carrito.splice(indice, 1);
@@ -106,11 +108,8 @@ function actualizarCarrito() {
 
   carritoSinDuplicado.forEach((producto) => {
     const div = document.createElement('div');
-    const itemCarrito = tienda0.filter((nombre)=>{
-      return tienda0.nombre === parseInt(nombre);
-    });
-    const numeroUnidadesItem = carrito.reduce((total, nombre)=>{
-      return nombre === producto ? total += 1 : total;
+    const numeroUnidadesItem = carrito.reduce((total, id)=>{
+      return id === producto ? total += 1 : total;
     },0);
 
     div.classList.add('d-flex');
@@ -124,6 +123,7 @@ function actualizarCarrito() {
 `
 contenedorCarrito.appendChild(div);
   })
+  totalCarrito.innerText = "El total es $" + carrito.reduce( (acc, el)=> acc += el.precio, 0)
 }
 
 selectConjunto.addEventListener('change', () => {
