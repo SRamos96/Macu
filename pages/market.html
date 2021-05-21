@@ -35,7 +35,7 @@
           </li>
           <li class="nav-item">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#carritoDeCompras">
-              <i class="fas fa-shopping-bag"></i>
+              <i class="fas fa-shopping-bag" id="abrirCarrito"></i>
             </button>
           </li>
         </ul>
@@ -80,12 +80,13 @@
           </button>
         </div>
         <div id="contenedorCarrito" class="modal-body">
-          HOLA MUNDO
+          
 
         </div>
         <div class="modal-footer d-flex justify-content-between">
           <span id="totalCarrito"></span>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar Carrito</button>
+          <button type="button" class="btn btn-secondary" id="btnLimpiarCarrito">Limpiar Carrito</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>

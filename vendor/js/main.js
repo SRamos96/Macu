@@ -3,9 +3,12 @@ const selectConjunto = document.getElementById('selectConjunto');
 const selectPrecios = document.getElementById('selectPrecios');
 const contenedorCarrito = document.getElementById('contenedorCarrito');
 const totalCarrito = document.getElementById('totalCarrito');
+const btnCarrito = document.getElementById('abrirCarrito');
+const btnLimpiarCarrito = document.getElementById('btnLimpiarCarrito');
 
-const carrito = [];
-
+let carrito = [];
+var carritoGuardado = localStorage.getItem('carrito');
+console.log(JSON.parse(carritoGuardado));
 
 class Productos {
   constructor(id, nombre, precio, stock, combo, img) {
@@ -85,9 +88,6 @@ function filtrar() {
 function agregarAlCarrito(id) {
   let productoElegido = tienda0.find(el => el.id == id);
   carrito.push(productoElegido);
-
-  localStorage.setItem('carrito', JSON.stringify(carrito));
-
   console.log(carrito);
 
   actualizarCarrito();
@@ -105,7 +105,6 @@ function eliminarProducto(id) {
 function actualizarCarrito() {
   contenedorCarrito.innerHTML = '';
   const carritoSinDuplicado = [...new Set(carrito)];
-
   carritoSinDuplicado.forEach((producto) => {
     const div = document.createElement('div');
     const numeroUnidadesItem = carrito.reduce((total, id)=>{
@@ -123,12 +122,33 @@ function actualizarCarrito() {
 `
 contenedorCarrito.appendChild(div);
   })
-  totalCarrito.innerText = "El total es $" + carrito.reduce( (acc, el)=> acc += el.precio, 0)
+  totalCarrito.innerText = "El total es $" + carrito.reduce( (acc, el)=> acc += el.precio, 0);
+  if (carrito.length == 0 ){
+    const spanCarritoVacio = document.createElement('span');
+    spanCarritoVacio.innerText = "Su carrito de compras esta vacío";
+    contenedorCarrito.appendChild(spanCarritoVacio);
+  }
+  localStorage.setItem("carrito", JSON.stringify(carrito));
 }
+function limpiarCarrito(){
+  if (carrito.length > 0){
+    carrito = [];
+    actualizarCarrito();
+  }
 
+}
 selectConjunto.addEventListener('change', () => {
   filtrar()
-})
+});
+
 selectPrecios.addEventListener('change', () => {
   filtrar()
+});
+
+btnLimpiarCarrito.addEventListener('click', ()=>{
+  limpiarCarrito();
+});
+
+btnCarrito.addEventListener('click', ()=>{
+  actualizarCarrito()
 })
